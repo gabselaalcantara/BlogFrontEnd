@@ -1,0 +1,64 @@
+<div class="container mb-5 mt-5">
+  <div class="row">
+    <div class="col-md-12">
+    <h1 class="text-center text-secondary">Atualizar meu usuario</h1>
+  </div>
+  </div>
+
+  <div class="row d-flex align-items-center">
+    <div class="col-md-6">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+          <form>
+            <div class="form-group">
+              <label for="">Nome:</label>
+              <input type="text" class="form-control" name="nome" id="nome" placeholder="Seu Nome "
+                [(ngModel)]="user.nome">
+            </div>
+            <div class="form-group">
+              <label for="usuario">Usuario (Email):</label>
+              <input type="text" class="form-control" name="usuario" id="usuario" placeholder="Seu usuario"
+                [(ngModel)]="user.usuario">
+            </div>
+            <div class="form-group">
+              <label for="foto">Link da foto:</label>
+              <input type="text" class="form-control" name="foto" id="foto" placeholder="link da foto"
+                [(ngModel)]="user.foto">
+            </div>
+
+            <div class="form-group">
+              <label for="senha">senha:</label>
+              <input (input)='confirmaSenha($event)'
+              type="password"
+              class="form-control" name="senha" id="sua senha"
+                placeholder="sua senha">
+            </div>
+
+            <div class="form-group">
+              <label for="confiramsenha">confirmar senha:</label>
+              <input type="password"
+              class="form-control"
+              name="confirmasenha"
+              id="confirmasenha"
+                [(ngModel)]="user.senha">
+            </div>
+
+            <div class="form-gropu">
+              <label for="tipo">Tipo de Usuario</label>
+              <select name="tipo" id="tipo" class="form-control" (change)="tipoUser($event)">
+                <option>Selecione o Tipo de Usuario</option>
+                <option value="normal">Adiministrador</option>
+                <option value="adm">Padrão</option>
+              </select>
+            </div>
+
+            <div class="mt-3 w-50 mx-auto d-flex justify-content-around">
+              <button class="btn btn-outline-danger" routerLink="/inicio">Cancelar </button>
+              <button class="btn btn-outline-success" (click)="atualizar()">Atualizar </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

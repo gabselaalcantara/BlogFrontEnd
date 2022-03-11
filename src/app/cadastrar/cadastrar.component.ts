@@ -1,7 +1,9 @@
-import { AuthService } from './../service/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../model/Usuario';
 import { Router } from '@angular/router';
+import { UserLogin } from '../model/UserLogin';
+import { Usuario } from '../model/Usuario';
+import { AlertasService } from '../service/alertas.service';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-cadastrar',
@@ -10,41 +12,42 @@ import { Router } from '@angular/router';
 })
 export class CadastrarComponent implements OnInit {
 
-  user: Usuario = new Usuario
-  confirmarSenha: string
-  tipoUsuario: string
-
+  user: Usuario = new Usuario()
+  confirmSenha : string
+  tipoUsuario : string
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private alertas: AlertasService
+    ) { }
 
   ngOnInit() {
     window.scroll(0,0)
-  }
 
-  confirmSenha(event: any) {
-    this.confirmarSenha = event.target.value
-  }
-
-  tipoUser(event: any){
-    this.tipoUsuario = event.target.value
-  }
-
-  cadastrar(){
-    this.user.tipo = this.tipoUsuario
-
-    if(this.user.senha != this.confirmarSenha){
-      alert('A senhas estão incorretas.')
-    } else {
-      this.authService.cadastrar(this.user).subscribe((resp: Usuario) => {
-        this.user = resp
-        this.router.navigate(['/entrar'])
-        alert('Usuário cadastrado com sucesso!')
-      })
     }
 
-  }
+    confirmaSenha(event: any){
+      this.confirmSenha = event.target.value
+    }
 
+    tipoUser(event: any){
+      this.tipoUser = event.target.value
+    }
+
+    cadastrar(){
+      this.user.tipo = this.tipoUsuario
+
+      if(this.user.senha != this.confirmSenha){
+        this.alertas.showAlertDanger('As senhas estão incorretas')
+      } else {
+        this.authService.cadastrar(this.user).subscribe((resp: Usuario)=> {
+          this.user = resp
+          this.router.navigate(['/entrar'])
+          this.alertas.showAlertSuccess('usuario cadastrado com sucesso')
+        })
+
+      }
+
+    }
 
 }
